@@ -1,6 +1,6 @@
 ---
 title:  "Vulnhub - Brainpan: 1"
-date:   2019-10-18 18:15:00
+date:   2019-10-19 18:15:00
 categories: [Writeup]
 tags: [Vulnhub, Brainpan, Writeup, Buffer Overflow, OSCP]
 ---
