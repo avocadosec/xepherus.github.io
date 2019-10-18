@@ -2,12 +2,13 @@
 title:  "Vulnhub Brainpan 1"
 date:   2019-10-18 12:15:00
 categories: [writeup]
-tags: [brainpan-vulnhub]
+tags: [brainpan] [vulnhub]
 ---
 
 WIP asdas asdasd asdasd 
 WIP asdas asdasd asdasd
 WIP asdas asdasd asdasd
+
 WIP asdas asdasd asdasd
 WIP asdas asdasd asdasd
 
