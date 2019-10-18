@@ -1,6 +1,6 @@
 ---
 title:  "Vulnhub Brainpan 1"
-date:   2019-5-4 12:15:00
+date:   2019-10-18 12:15:00
 categories: [writeup]
 tags: [brainpan-vulnhub]
 ---
