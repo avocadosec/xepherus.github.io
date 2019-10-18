@@ -1,8 +1,8 @@
 ---
 title:  "Vulnhub Brainpan 1"
 date:   2019-10-18 12:15:00
-categories: [writeup]
-tags: [brainpan] [vulnhub]
+categories: [Writeup]
+tags: [Vulnhub, Brainpan, Writeup, Buffer Overflow, OSCP]
 ---
 
 WIP asdas asdasd asdasd 
