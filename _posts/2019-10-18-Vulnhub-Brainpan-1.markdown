@@ -1,8 +1,8 @@
 ---
 title:  "Vulnhub Brainpan 1"
 date:   2019-5-4 12:15:00
-categories: [Exploit Development]
-tags: [Exploit Development] [OSCP] [Buffer Overflow]
+categories: [writeup]
+tags: [brainpan-vulnhub]
 ---
 
 WIP asdas asdasd asdasd 
@@ -11,6 +11,6 @@ WIP asdas asdasd asdasd
 WIP asdas asdasd asdasd
 WIP asdas asdasd asdasd
 
-[brainpan][brainpan]
+[brainpan][brainpan-link]
 
-[brainpan]: https://www.vulnhub.com/entry/brainpan-1,51/
+[brainpan-link]: https://www.vulnhub.com/entry/brainpan-1,51/
