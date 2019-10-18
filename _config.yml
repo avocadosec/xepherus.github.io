@@ -3,7 +3,7 @@ title: Xeph
 description: 'Purple Teaming - Exploit Dev'
 url: 'https://xepher.us'
 baseurl: ''
-# google_analytics: 'UA-XXXXXX-X'
+google_analytics: 'UA-150390413-1'
 # disqus_shortname: 'your-disqus-name'
 
 author:
