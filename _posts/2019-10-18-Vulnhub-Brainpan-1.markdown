@@ -5,13 +5,13 @@ categories: [Writeup]
 tags: [Vulnhub, Brainpan, Buffer Overflow, OSCP]
 ---
 
-### Intro
+#### Intro
 
 I am starting off this blog with a quick writeup on [Brainpan: 1][brainpan-link], a boot2root virtual machine that is an excellent introduction for anyone interested
 in going down the challenging yet rewarding rabbithole that is exploit development.
 It is also good practice for solidifying concepts taught in the Penetration Testing With Kali Linux course.
 
-### Initial Discovery
+#### Initial Discovery
 
 After spinning up the VM, we are greeted with the login screen for the box.
 ![](/images/brainpan-1/1.jpg)
@@ -25,7 +25,7 @@ Now we will run another nmap scan on that IP. This time with some additional fla
 
 Looks like we get two open ports and a lot of text in the banner grab results.
 
-### Web Service (Port 10000)
+#### Web Service (Port 10000)
 
 First let's check out port 10000 since it appears to be a web service. The index page seems to be a Veracode PSA about safe coding, interesting...  
 ![](/images/brainpan-1/4.jpg)
@@ -39,7 +39,7 @@ We quickly get an interesting /bin directory back, lets check it out.
 All that seems to be present is an executable file, we'll go ahead and download it.
 At this point we can check what is running on port 9999.
 
-### Mystery Service (Port 9999)
+#### Mystery Service (Port 9999)
 
 ![](/images/brainpan-1/7.jpg)
 
@@ -52,7 +52,7 @@ We did not get an access denied message that time, and when we try to connect we
 
 It seems like the application running on that port crashed as a result, so lets go ahead and restart the Brainpan VM to bring it back up and move on to the binary we found on the web service.
 
-### Reproducing the Crash
+#### Reproducing the Crash
 
 Since this is an executable file, we should move it over to a windows machine for further testing.
 In this case I am using a 32 bit Windows 7 VM with Immunity Debugger and Mona installed.
@@ -97,7 +97,7 @@ s.close()
 The script can be executed with the target IP as an argument:  
 `# python3 exploit.py 192.168.20.129`
 
-### Finding the Offset
+#### Finding the Offset
 
 Since we can reproduce the crash by sending 1000 bytes to the application, we need to send a unique pattern of bytes so we can find out exactly where our payload overwrites EIP.
 There are lots of ways to generate a pattern, such as the pattern_create and pattern_offset ruby scripts included in the Metasploit Framework.  
@@ -127,7 +127,7 @@ Our new payload should look like this:
 Restart, reattach, and send the updated payload, now EIP is overwritten with the hex equivalent of B (42) and the ESP register is pointing to the very beginning of our C's.
 ![](/images/brainpan-1/16.jpg)
 
-### Redirecting Execution
+#### Redirecting Execution
 
 So now we have control over the EIP register, which gives us the ability to execute any instruction in the application or associated DLLs. *As long as we have a consistent address to use.*
 In this case, the ESP register is pointing to the beginning of our C's, so all we need is a simple JMP ESP instruction to redirect execution to an area of memory that we control.
@@ -153,7 +153,7 @@ Now we can set a breakpoint at 0x311712F3 in Immunity and try this new payload t
 After hitting F8, ESP should be pointing to the beginning of our C's.
 ![](/images/brainpan-1/20.jpg)
 
-### Finding Bad Characters
+#### Checking for Bad Characters
 
 We now have control over EIP, and can reliably redirect execution to a section of the stack that we have control over. So all that is left is replacing the C's in our payload with usable shellcode to give us a reverse shell.
 In order to generate the shellcode, we first need to identify any bad characters that may truncate or otherwise mangle our payload. Mona has our back again with `!mona bytearray`.  
@@ -181,7 +181,7 @@ payload = (b"A" * 524) + b"\xf3\x12\x17\x31" + chars + b'\r\n'
 After sending this new payload, we inspect the content in dump to look for any missing/truncated characters.  
 ![](/images/brainpan-1/22.jpg)
 
-### Generating Shellcode
+#### Generating Shellcode
 
 Looks like there are no missing characters! This means that the null byte (\x00) was all we need to worry about. Next we'll generate some shellcode with msfvenom.
 All we need in this case is a standard windows reverse tcp payload. The following command was used to generate the shellcode:  
@@ -248,7 +248,7 @@ s.send(payload)
 s.close()
 ```
 
-### Run the Exploit
+#### Run the Exploit
 
 Now lets test it out on our debugging machine. First we'll setup a listener on port 4444 with netcat and then run the exploit script against the debugging VM's IP.
 ![](/images/brainpan-1/23.jpg)
@@ -256,7 +256,7 @@ Now lets test it out on our debugging machine. First we'll setup a listener on p
 Now we just need to run it against the Brainpan VM, hmm...
 ![](/images/brainpan-1/24.jpg)
 
-### Privilege Escalation
+#### Privilege Escalation
 
 We don't have access to whoami, which is strange. It appears that we may be inside a Linux environment given the .sh file and directory "structure". Following this logic, lets assume /bin is present and attempt to run /bin/sh.
 ![](/images/brainpan-1/25.jpg)
