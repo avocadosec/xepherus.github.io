@@ -5,6 +5,8 @@ categories: [Writeup]
 tags: [Vulnhub, Brainpan, Buffer Overflow, OSCP]
 ---
 
+##### Work in Progress #####
+
 ### Intro
 
 I am starting off this blog with a quick writeup on [Brainpan: 1][brainpan-link], a boot2root virtual machine that is an excellent introduction for anyone interested
@@ -22,5 +24,7 @@ The first step will be to find the IP address of the VM on our network. So we'll
 Looks like we have an IP of (IP). Now lets move on to port scanning.
 
 After another nmap scan we are presented with the following ports.
+
+
 
 [brainpan-link]: https://www.vulnhub.com/entry/brainpan-1,51/
