@@ -38,9 +38,10 @@ We quickly get an interesting /bin directory back, lets check it out.
 
 All that seems to be present is an executable file, we'll go ahead and download it.
 At this point we can check what is running on port 9999.
-![](/images/brainpan-1/7.jpg)
 
 ### Mystery Service (Port 9999)
+
+![](/images/brainpan-1/7.jpg)
 
 Looks like a login prompt, it is very likely that this is the application we found in /bin on the web service.
 When we enter a random password, it gives an access denied message and terminates the connection. Lets try to send 1000 A's to it and see what happens.
