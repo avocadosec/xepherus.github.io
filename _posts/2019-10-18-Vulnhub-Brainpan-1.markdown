@@ -24,12 +24,13 @@ Now we will run another nmap scan on that IP. This time with some additional fla
 ![](/images/brainpan-1/3.jpg)
 
 Looks like we get two open ports and a lot of text in the banner grab results.
-![](/images/brainpan-1/4.jpg)
 
 ### Web Service (Port 10000)
 
-First let's check out port 10000 since it appears to be a web service. The index page seems to be a Veracode PSA about to safe coding, interesting... There does not appear to be anything else in the index other than the Veracode image.
-So lets run through some basic web directory enumeration with gobuster.
+First let's check out port 10000 since it appears to be a web service. The index page seems to be a Veracode PSA about to safe coding, interesting...  
+![](/images/brainpan-1/4.jpg)
+
+There does not appear to be anything else in the index other than the Veracode image. So lets run through some basic web directory enumeration with gobuster.
 ![](/images/brainpan-1/5.jpg)
 
 We quickly get an interesting /bin directory back, lets check it out.
