@@ -16,10 +16,10 @@ It is also good practice for solidifying concepts taught in the Penetration Test
 ### Initial Discovery
 
 After spinning up the VM, we are greeted with the login screen for the box.
-![](/images/brainpan1-1.jpg)
+![](/images/brainpan-1/1.jpg)
 
 The first step will be to find the IP address of the VM on our network. So we'll do a quick nmap -sn (No port scan) to find it.
-(IMAGE_2)
+![](/images/brainpan-1/2.jpg)
 
 Looks like we have an IP of (IP). Now lets move on to port scanning.
 
