@@ -1,11 +1,11 @@
 ---
 title:  "Vulnhub - Brainpan: 1"
-date:   2019-10-18 12:15:00
+date:   2019-10-19 12:15:00
 categories: [Writeup]
 tags: [Vulnhub, Brainpan, Buffer Overflow, OSCP]
 ---
 
-### intro
+### Intro
 
 I am starting off this blog with a quick writeup on [Brainpan: 1][brainpan-link], a boot2root virtual machine that is an excellent introduction for anyone interested
 in going down the challenging yet rewarding rabbithole that is exploit development.
