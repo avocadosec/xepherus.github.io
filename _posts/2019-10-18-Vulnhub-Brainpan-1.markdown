@@ -119,7 +119,7 @@ After restarting the application, reattaching, and then sending this new pattern
 
 If we run those 4 bytes through pattern_offset, it tells us that the offset is at 524 bytes.
 Knowing this, we can adjust our skeleton exploit script to send 524 A's, followed by 4 B's where we expect the EIP overwrite to take place, and then fill the remainder with C's.  
-Our new payload should look like this:
+Our new payload should look like this:  
 `payload = (b"A" * 524) + (b"B" * 4) + (b"C" * (1000-524-4)) + b'\r\n'`
 
 Restart, reattach, and send the updated payload, now EIP is overwritten with the hex equivalent of B (42) and the ESP register is pointing to the very beginning of our C's.
