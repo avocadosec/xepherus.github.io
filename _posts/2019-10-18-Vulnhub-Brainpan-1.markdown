@@ -27,7 +27,7 @@ Looks like we get two open ports and a lot of text in the banner grab results.
 
 ### Web Service (Port 10000)
 
-First let's check out port 10000 since it appears to be a web service. The index page seems to be a Veracode PSA about to safe coding, interesting...  
+First let's check out port 10000 since it appears to be a web service. The index page seems to be a Veracode PSA about safe coding, interesting...  
 ![](/images/brainpan-1/4.jpg)
 
 There does not appear to be anything else in the index other than the Veracode image. So lets run through some basic web directory enumeration with gobuster.
