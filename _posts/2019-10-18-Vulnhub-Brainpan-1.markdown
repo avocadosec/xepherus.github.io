@@ -115,7 +115,7 @@ payload = pattern + b'\r\n'
 ```
 
 After restarting the application, reattaching, and then sending this new pattern, we can see EIP has been overwritten by the value 0x35724134.
-![](/images/brainpan-1/17.jpg)
+![](/images/brainpan-1/15.jpg)
 
 If we run those 4 bytes through pattern_offset, it tells us that the offset is at 524 bytes.
 Knowing this, we can adjust our skeleton exploit script to send 524 A's, followed by 4 B's where we expect the EIP overwrite to take place, and then fill the remainder with C's.  
@@ -123,7 +123,7 @@ Our new payload should look like this:
 `payload = (b"A" * 524) + (b"B" * 4) + (b"C" * (1000-524-4)) + b'\r\n'`
 
 Restart, reattach, and send the updated payload, now EIP is overwritten with the hex equivalent of B (42) and the ESP register is pointing to the very beginning of our C's.
-![](/images/brainpan-1/19.jpg)
+![](/images/brainpan-1/16.jpg)
 
 ### Redirecting Execution
 
@@ -132,12 +132,12 @@ In this case, the ESP register is pointing to the beginning of our C's, so all w
 Luckily, there are no protections such as DEP or ASLR in this challenge, so finding a suitable address should be pretty straight forward.
 
 Just to make sure, we'll check to see if we have enough space at the end of our payload to include a reverse shell payload. Typically the shellcode required for a reverse shell is around 300-400 bytes after encoding.
-![](/images/brainpan-1/20.jpg)
+![](/images/brainpan-1/17.jpg)
 
 Great! We have 1D4 bytes of C's in the stack, this comes out to 468 bytes which is plenty of room for the shellcode we will be sending.
 
 Mona will be very helpful for finding an appropriate instruction address to point ESP to. First we use `!mona jmp -r esp` to show all instances of JMP ESP in the application.
-![](/images/brainpan-1/21.jpg)
+![](/images/brainpan-1/18.jpg)
 
 Looks like we only have one JMP ESP instruction. We'll copy the address for it and add it to the script making sure to reverse the bytes to account for endianess.
 ```
@@ -146,17 +146,17 @@ payload = (b"A" * 524) + b"\xf3\x12\x17\x31" + (b"C" * (1000-524-4)) + b'\r\n'
 ```
 
 Now we can set a breakpoint at 0x311712F3 in Immunity and try this new payload to see if we land in the area of the stack that we control.
-![](/images/brainpan-1/22.jpg)
+![](/images/brainpan-1/19.jpg)
 
 After hitting F8, ESP should be pointing to the beginning of our C's.
-![](/images/brainpan-1/23.jpg)
+![](/images/brainpan-1/20.jpg)
 
 ### Finding Bad Characters
 
 We now have control over EIP, and can reliably redirect execution to a section of the stack that we have control over. So all that is left is replacing the C's in our payload with usable shellcode to give us a reverse shell.
 In order to generate the shellcode, we first need to identify any bad characters that may truncate or otherwise mangle our payload. Mona has our back again with `!mona bytearray`.  
 Mona's bytearray function generates a full array of bytes from \x00 to \xff.
-![](/images/brainpan-1/24.jpg)
+![](/images/brainpan-1/21.jpg)
 
 After we generate our bytearray, it is a good idea to copy it from the output file that mona creates as the output in the console is likely truncated. Lets add this to our script as a new variable so we can send it along in place of our C's.  
 We will go ahead and remove \x00 since it represents a null byte, which typically causes input functions to stop receiving data when they encounter it.
@@ -177,7 +177,7 @@ payload = (b"A" * 524) + b"\xf3\x12\x17\x31" + chars + b'\r\n'
 ```
 
 After sending this new payload, we inspect the content in dump to look for any missing/truncated characters.
-![](/images/brainpan-1/25.jpg)
+![](/images/brainpan-1/22.jpg)
 
 ### Generating Shellcode
 
@@ -249,26 +249,26 @@ s.close()
 ### Run the Exploit
 
 Now lets test it out on our debugging machine. First we'll setup a listener on port 4444 with netcat and then run the exploit script against the debugging VM's IP.
-![](/images/brainpan-1/26.jpg)
+![](/images/brainpan-1/23.jpg)
 
 Now we just need to run it against the Brainpan VM, hmm...
-![](/images/brainpan-1/27.jpg)
+![](/images/brainpan-1/24.jpg)
 
 ### Privilege Escalation
 
 We don't have access to whoami, which is strange. It appears that we may be inside a Linux environment given the .sh file and directory "structure". Following this logic, lets assume /bin is present and attempt to run /bin/sh.
-![](/images/brainpan-1/28.jpg)
+![](/images/brainpan-1/25.jpg)
 
 Even more interesting, we can run bash. Just to make this a bit cleaner, lets use python to get a better tty.  
-![](/images/brainpan-1/29.jpg)
+![](/images/brainpan-1/26.jpg)
 
 After some basic investigation, it appears that we have the ability to run `/home/anansi/bin/anansi_util` as root via sudo.
-![](/images/brainpan-1/30.jpg)
-![](/images/brainpan-1/31.jpg)
+![](/images/brainpan-1/27.jpg)
+![](/images/brainpan-1/28.jpg)
 
 The 'manual' option definitely seems interesting. When it is passed in, it appears to land in something similar to 'less'. According to the man page for 'less' you can run bash commands while it is open by prepending '!' before a command.  
 Knowing this, we can try to run a command like `!/bin/bash`.
-![](/images/brainpan-1/32.jpg)
+![](/images/brainpan-1/29.jpg)
 
 Success!
 
