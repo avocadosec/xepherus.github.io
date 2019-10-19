@@ -104,14 +104,14 @@ There are lots of ways to generate a pattern, such as the pattern_create and pat
 To generate the pattern, simply call the script and specify a length with the -l flag.
 ```
 # /usr/share/metasploit-framework/tools/exploit/pattern_create.rb -l 1000
-Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0
 ...snip...
 Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2B
 ```
 
 After we get the pattern from pattern_create, we need to add this to our script.
 ```
-pattern = b"Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa...snip...Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2B"
+pattern = b"Aa0Aa1...snip...Bh2B"
 
 payload = pattern + b'\r\n'
 ```
