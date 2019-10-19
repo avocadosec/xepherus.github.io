@@ -54,7 +54,7 @@ It seems like the application running on that port crashed as a result, so lets 
 
 ### Reproducing the Crash
 
-Since this is an executable file, we should to move this over to a windows machine for further testing.
+Since this is an executable file, we should move it over to a windows machine for further testing.
 In this case I am using a 32 bit Windows 7 VM with Immunity Debugger and Mona installed.
 
 First we'll start the application and make sure it is working. and attach to it with Immunity.
