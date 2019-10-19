@@ -268,7 +268,7 @@ After some basic investigation, it appears that we have the ability to run `/hom
 ![](/images/brainpan-1/27.jpg)
 ![](/images/brainpan-1/28.jpg)
 
-The 'manual' option definitely seems interesting. When it is passed in, it appears to land in something similar to 'less'. According to the man page for 'less' you can run bash commands while it is open by prepending '!' before a command.  
+The 'manual' option definitely seems interesting. When it is passed in, it appears to land in a man page for the given argument. A majority of pagers such as 'man', 'less', and 'more' allow you to run bash commands while it is open by prepending '!' before a command.  
 Knowing this, we can try to run a command like `!/bin/bash`.
 ![](/images/brainpan-1/29.jpg)
 
